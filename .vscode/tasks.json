@@ -1,0 +1,71 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: msvc build active file",
+            "command": "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat",
+            "args": [
+                "&",
+                "cl.exe",
+                "/std:c++latest",
+                "/EHsc",
+                "/Fe:",
+                "${fileBasenameNoExtension}.exe",
+                "${fileBasenameNoExtension}.cpp"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": "build",
+            "dependsOn": [
+                "MSVC ENV"
+            ],
+            "detail": "compiler: cl.exe"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: clang.exe build active file",
+            "command": "clang",
+            "args": [
+                "-g",
+                "-std=c++20",
+                "${fileBasenameNoExtension}.cpp",
+                "-o",
+                "${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": "build",
+            "detail": "compiler: clang.exe"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe build active file",
+            "command": "g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++20",
+                "${fileBasenameNoExtension}.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "compiler: g++.exe"
+        }
+    ]
+}
