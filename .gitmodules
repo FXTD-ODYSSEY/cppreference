@@ -1,0 +1,18 @@
+[submodule "books/modern-cpp-tutorial"]
+	path = books/modern-cpp-tutorial
+	url = git@github.com:changkun/modern-cpp-tutorial.git
+[submodule "repo/TheAlgorithms-C-Plus-Plus"]
+	path = repo/TheAlgorithms-C-Plus-Plus
+	url = git@github.com:TheAlgorithms/C-Plus-Plus.git
+[submodule "books/modern-cpp-features"]
+	path = books/modern-cpp-features
+	url = git@github.com:AnthonyCalandra/modern-cpp-features.git
+[submodule "books/EffectiveModernCppChinese"]
+	path = books/EffectiveModernCppChinese
+	url = git@github.com:CnTransGroup/EffectiveModernCppChinese.git
+[submodule "books/Cpp_Primer_Practice"]
+	path = books/Cpp_Primer_Practice
+	url = git@github.com:applenob/Cpp_Primer_Practice.git
+[submodule "repo/CppCoreGuidelines"]
+	path = repo/CppCoreGuidelines
+	url = git@github.com:isocpp/CppCoreGuidelines.git
