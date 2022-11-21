@@ -12,27 +12,27 @@ class CppreferenceSpider(scrapy.Spider):
     links = set()
     # @add_separator
     def parse(self, response, depth=0):
-        if depth >= 3:
+        if depth >= 10:
             return
+    
+        # NOTE(timmyliang): get text element
+        text_list = response.xpath('//div[@class="t-example"]/div[2]').xpath("string(.)").extract()
+        if text_list:
+            url = response.url
+            text = text_list[-1]
+            self.logger.warning(url)
+            code_item = CodeItem()
+            code_item["path"] = url.split("/w/cpp/")[-1]
+            code_item["script"] = text.replace(" ", "")
+            yield code_item
+        
         links = response.xpath("//a/@href").extract()
         links = {link for link in set(links) if link.startswith("/w/cpp/")}
-
-        for index, link in enumerate(links):
+        for link in links:
             link = link.split("#")[0]
             if link in self.links:
                 continue
 
             self.links.add(link)
-
-            # NOTE(timmyliang): get text element
-            text_list = response.xpath('//div[@class="t-example"]/div[2]').xpath("string(.)").extract()
-            if text_list:
-                text = text_list[-1]
-                self.logger.warning(link)
-                code_item = CodeItem()
-                code_item["path"] = link.replace("/w/cpp/", "")
-                code_item["script"] = text.replace(" ", "")
-                yield code_item
-
             link = self.base_url + link
             yield scrapy.Request(url=link, callback=partial(self.parse, depth=depth + 1))
