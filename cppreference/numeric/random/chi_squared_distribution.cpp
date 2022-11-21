@@ -1,0 +1,69 @@
+// cppreference link https://en.cppreference.com/w/cpp/numeric/random/chi_squared_distribution
+#include <algorithm>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <random>
+#include <vector>
+
+template <int Height = 5, int BarWidth = 1, int Padding = 1, int Offset = 0, class Seq>
+void draw_vbars(Seq&& s, const bool DrawMinMax = true)
+{
+    static_assert((Height > 0) && (BarWidth > 0) && (Padding >= 0) && (Offset >= 0));
+    auto cout_n = [](auto&& v, int n = 1) { while (n-- > 0) std::cout << v; };
+    const auto [min, max] = std::minmax_element(std::cbegin(s), std::cend(s));
+    std::vector<std::div_t> qr;
+    for (typedef decltype(*cbegin(s)) V; V e : s)
+        qr.push_back(std::div(std::lerp(V(0), Height * 8, (e - *min) / (*max - *min)), 8));
+    for (auto h { Height }; h-- > 0; cout_n('\n')) {
+        cout_n(' ', Offset);
+        for (auto dv : qr) {
+            const auto q { dv.quot }, r { dv.rem };
+            unsigned char d[] { 0xe2, 0x96, 0x88, 0 }; // Full Block: '█'
+            q < h ? d[0] = ' ', d[1] = 0 : q == h ? d[2] -= (7 - r)
+                                                  : 0;
+            cout_n(d, BarWidth), cout_n(' ', Padding);
+        }
+        if (DrawMinMax && Height > 1)
+            Height - 1 == h ? std::cout << "┬ " << *max : h ? std::cout << "│ "
+                                                            : std::cout << "┴ " << *min;
+    }
+}
+
+int main()
+{
+    std::random_device rd {};
+    std::mt19937 gen { rd() };
+
+    auto χ2 = [&gen](const float dof) {
+        std::chi_squared_distribution<float> d { dof /* n */ };
+
+        const int norm = 1'00'00;
+        const float cutoff = 0.002f;
+
+        std::map<int, int> hist {};
+        for (int n = 0; n != norm; ++n) {
+            ++hist[std::round(d(gen))];
+        }
+
+        std::vector<float> bars;
+        std::vector<int> indices;
+        for (auto const& [n, p] : hist) {
+            if (float x = p * (1.0 / norm); cutoff < x) {
+                bars.push_back(x);
+                indices.push_back(n);
+            }
+        }
+
+        std::cout << "dof = " << dof << ":\n";
+        draw_vbars<4, 3>(bars);
+        for (int n : indices) {
+            std::cout << "" << std::setw(2) << n << "  ";
+        }
+        std::cout << "\n\n";
+    };
+
+    for (float dof : { 1.f, 2.f, 3.f, 4.f, 6.f, 9.f })
+        χ2(dof);
+}

@@ -1,0 +1,12 @@
+// cppreference link https://en.cppreference.com/w/cpp/ranges/split_view/end
+#include <iostream>
+#include <ranges>
+#include <string_view>
+
+int main()
+{
+    constexpr std::string_view keywords { "bitand bitor bool break" };
+    std::ranges::split_view kw { keywords, ' ' };
+    const auto count = std::ranges::distance(kw.begin(), kw.end());
+    std::cout << "Words count: " << count << '\n';
+}
