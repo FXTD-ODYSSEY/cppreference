@@ -6,7 +6,12 @@
 import scrapy
 
 
-class CodeItem(scrapy.Item):
+class CppreferenceItem(scrapy.Item):
+    # define the fields for your item here like:
+    path = scrapy.Field()
+    script = scrapy.Field()
+
+class CplusplusItem(scrapy.Item):
     # define the fields for your item here like:
     path = scrapy.Field()
     script = scrapy.Field()
