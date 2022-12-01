@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 *.exe
-output.json
+*.ilk
+*.pdb

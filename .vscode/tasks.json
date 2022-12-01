@@ -63,7 +63,7 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                // "isDefault": true
             },
             "detail": "compiler: g++.exe"
         }
