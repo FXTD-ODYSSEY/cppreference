@@ -55,3 +55,6 @@
 [submodule "books/cs-self-learning"]
 	path = books/cs-self-learning
 	url = git@github.com:PKUFlyingPig/cs-self-learning.git
+[submodule "examples/TheChernoCppTutorial_Code"]
+	path = examples/TheChernoCppTutorial_Code
+	url = git@github.com:remolaz/TheChernoCppTutorial_Code.git
